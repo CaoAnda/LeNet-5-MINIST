@@ -3,6 +3,7 @@ import torchvision
 import torch
 
 test_transform = transforms.Compose([
+    transforms.Resize((20, 20)),
     transforms.ToTensor(),
     transforms.Normalize(mean=(0.5), std=(0.5))
 ])
