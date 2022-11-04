@@ -1,0 +1,14 @@
+{
+    "device": "cuda:0",
+    "batch_size": 128,
+    "epochs": 40,
+    "lr": 0.001,
+    "seed": 3407,
+    "half_conv": false,
+    "dropout": 0,
+    "input_size": [
+        32,
+        32
+    ],
+    "output": true
+}
