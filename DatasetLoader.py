@@ -4,7 +4,7 @@ import torch
 
 test_transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+    transforms.Normalize(mean=(0.5), std=(0.5))
 ])
 
 transform = transforms.Compose([
@@ -32,13 +32,17 @@ def get_dataset_loader(dataset_path, batch_size):
         dataset=train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=2
     )
     test_loader = torch.utils.data.DataLoader(
         dataset=test_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=2
     )
 
     return train_loader, test_loader
+
+if __name__ == '__main__':
+    train_loader, test_loader = get_dataset_loader('minist', batch_size=128)
+    niter = iter(train_loader)
+    image, label = next(niter)
+    print(image.shape, label.shape)
