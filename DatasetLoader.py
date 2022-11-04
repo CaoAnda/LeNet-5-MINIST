@@ -2,20 +2,19 @@ from torchvision.transforms import transforms
 import torchvision
 import torch
 
-test_transform = transforms.Compose([
-    transforms.Resize((20, 20)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5), std=(0.5))
-])
+def get_dataset_loader(dataset_path, batch_size, input_size):
+    test_transform = transforms.Compose([
+        transforms.Resize(input_size),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.5), std=(0.5))
+    ])
 
-transform = transforms.Compose([
-    transforms.Pad(4),
-    transforms.RandomHorizontalFlip(), 
-    transforms.RandomCrop(32), 
-    test_transform
-])
-
-def get_dataset_loader(dataset_path, batch_size):
+    transform = transforms.Compose([
+        transforms.Pad(4),
+        transforms.RandomHorizontalFlip(), 
+        transforms.RandomCrop(32), 
+        test_transform
+    ])
     train_dataset = torchvision.datasets.MNIST(
         root=dataset_path,
         train=True,

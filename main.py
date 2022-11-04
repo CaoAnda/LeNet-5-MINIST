@@ -22,7 +22,7 @@ random.seed(seed)
 
 if __name__ == '__main__':
     dataset_path = './minist'
-    train_loader, test_loader = get_dataset_loader(dataset_path, batch_size=opt.batch_size)
+    train_loader, test_loader = get_dataset_loader(dataset_path, batch_size=opt.batch_size, input_size=opt.input_size)
 
     device = torch.device(opt.device if torch.cuda.is_available() else 'cpu')
     if torch.cuda.is_available():
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     epoch_num = opt.epochs
 
-    model = LeNet().to(device)
+    model = LeNet(half_conv=opt.half_conv, dropout=opt.dropout).to(device)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=opt.lr)
