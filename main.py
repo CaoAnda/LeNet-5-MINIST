@@ -22,7 +22,7 @@ random.seed(seed)
 
 if __name__ == '__main__':
     dataset_path = './minist'
-    train_loader, test_loader = get_dataset_loader(dataset_path, batch_size=opt.batch_size, input_size=opt.input_size)
+    train_loader, test_loader = get_dataset_loader(dataset_path, batch_size=opt.batch_size, input_size=(opt.input_size, opt.input_size))
 
     device = torch.device(opt.device if torch.cuda.is_available() else 'cpu')
     if torch.cuda.is_available():
@@ -105,3 +105,11 @@ if __name__ == '__main__':
         with open(os.path.join(log_dir, 'log.txt'), 'a+') as file:
             file.write('\t'.join([str(val_epochs_acc[-1]), str(train_epochs_loss[-1]), str(val_epochs_loss[-1])]))
             file.write('\n')
+        
+    if not os.path.exists('./analys.csv'):
+        with open('./analys.csv', 'w+') as file:
+            file.write(','.join(['half_conv', 'dropout', 'input_size', 'lr', 'acc']))
+            file.write('\n')
+    with open('./analys.csv', 'a+') as file:
+        file.write(','.join(map(str, [opt.half_conv, opt.dropout, opt.input_size, opt.lr, max(val_epochs_acc)])))
+        file.write('\n')
